@@ -28,7 +28,7 @@
 
         <hibernate-core.version>5.4.2.Final</hibernate-core.version>
         <hibernate-common.version>5.1.0.Final</hibernate-common.version>
-        <hibernate-validations.version>6.0.16.Final</hibernate-validations.version>
+        <hibernate-validations.version>6.1.2.Final</hibernate-validations.version>
         <hibernate-validations-uel.version>3.0.1-b09</hibernate-validations-uel.version>
         <c3p0.version>0.9.1.2</c3p0.version>
     </properties>
