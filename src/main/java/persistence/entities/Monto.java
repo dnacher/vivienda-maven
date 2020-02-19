@@ -28,4 +28,62 @@ public class Monto {
 
     @Column
     private Boolean activo;
+
+    public Monto(){}
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getSimbolo() {
+        return simbolo;
+    }
+
+    public void setSimbolo(String simbolo) {
+        this.simbolo = simbolo;
+    }
+
+    public String getTipoMonto() {
+        return tipoMonto;
+    }
+
+    public void setTipoMonto(String tipoMonto) {
+        this.tipoMonto = tipoMonto;
+    }
+
+    public double getValorPesos() {
+        return valorPesos;
+    }
+
+    public void setValorPesos(double valorPesos) {
+        this.valorPesos = valorPesos;
+    }
+
+    public Date getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+
+    public void setFechaActualizacion(Date fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
 }

@@ -17,4 +17,30 @@ public class PermisoUsuario {
 
     @Column(name = "permiso")
     private Integer permiso;
+
+    public PermisoUsuario(){}
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public TipoUsuario getTipousuario() {
+        return tipousuario;
+    }
+
+    public void setTipousuario(TipoUsuario tipousuario) {
+        this.tipousuario = tipousuario;
+    }
+
+    public Integer getPermiso() {
+        return permiso;
+    }
+
+    public void setPermiso(Integer permiso) {
+        this.permiso = permiso;
+    }
 }
