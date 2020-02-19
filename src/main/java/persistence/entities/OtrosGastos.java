@@ -11,13 +11,16 @@ public class OtrosGastos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "concepto")
     private Concepto concepto;
 
-    @Column
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "monto")
     private Monto monto;
 
-    @Column
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "unidad")
     private Unidad unidad;
 
     @Column

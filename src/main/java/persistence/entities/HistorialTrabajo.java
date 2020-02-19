@@ -13,11 +13,17 @@ public class HistorialTrabajo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "tecnico")
     private Tecnico tecnico;
 
-    @Column
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "trabajo")
     private Trabajo trabajo;
+
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "estado")
+    private Estado estado;
 
     @Column
     private String descripcion;
@@ -25,6 +31,4 @@ public class HistorialTrabajo {
     @Column
     private Date fecha;
 
-    @Column
-    private Estado estado;
 }

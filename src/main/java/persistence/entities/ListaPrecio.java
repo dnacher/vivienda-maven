@@ -11,7 +11,8 @@ public class ListaPrecio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "material")
     private Material material;
 
     @Column

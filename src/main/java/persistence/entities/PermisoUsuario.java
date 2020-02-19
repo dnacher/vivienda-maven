@@ -11,7 +11,8 @@ public class PermisoUsuario {
     @Column(name = "id")
     private Integer id;
 
-
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "tipo_usuario")
     private TipoUsuario tipousuario;
 
     @Column(name = "permiso")

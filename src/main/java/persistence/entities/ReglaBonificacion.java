@@ -22,7 +22,8 @@ public class ReglaBonificacion {
     @Column
     private Integer valor;
 
-    @Column
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "monto")
     private Monto monto;
 
     @Column

@@ -11,7 +11,8 @@ public class HistorialMonto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "monto")
     private Monto monto;
 
     @Column
