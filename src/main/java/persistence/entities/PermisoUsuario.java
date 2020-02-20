@@ -11,10 +11,6 @@ public class PermisoUsuario {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
-    @JoinColumn(name = "tipo_usuario")
-    private TipoUsuario tipousuario;
-
     @Column(name = "permiso")
     private Integer permiso;
 
@@ -26,14 +22,6 @@ public class PermisoUsuario {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public TipoUsuario getTipousuario() {
-        return tipousuario;
-    }
-
-    public void setTipousuario(TipoUsuario tipousuario) {
-        this.tipousuario = tipousuario;
     }
 
     public Integer getPermiso() {

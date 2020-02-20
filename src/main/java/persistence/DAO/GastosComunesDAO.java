@@ -1,6 +1,6 @@
 package persistence.DAO;
 
-import persistence.entities.CuotaConvenio;
+import org.springframework.beans.factory.annotation.Autowired;
 import persistence.entities.GastosComunes;
 import persistence.repository.GastosComunesRepository;
 
@@ -20,7 +20,7 @@ public class GastosComunesDAO {
         return gastosComunes;
     }
 
-    public CuotaGastosComunes saveGastosComunes(GastosComunes gastosComunes){
+    public GastosComunes saveGastosComunes(GastosComunes gastosComunes){
         return repository.save(gastosComunes);
     }
 
@@ -36,7 +36,7 @@ public class GastosComunesDAO {
         repository.deleteById(id);
     }
 
-    public CuotaConvenio getGastosComunesById(Integer id){
+    public GastosComunes getGastosComunesById(Integer id){
         return repository.findById(id).get();
     }
 }

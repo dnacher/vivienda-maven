@@ -1,6 +1,7 @@
 package persistence.DAO;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import persistence.entities.PermisoUsuario;
 import persistence.repository.PermisoUsuarioRepository;
 

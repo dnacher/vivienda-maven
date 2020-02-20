@@ -4,15 +4,16 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "usuario")
-public class Usuario implements java.io.Serializable {
+public class Usuario {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUsuario;
+    private Integer id;
 
-
-    private TipoUsuario tipousuario;
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "tipo_usuario")
+    private TipoUsuario tipoUsuario;
 
     @Column
     private String nombre;
@@ -37,20 +38,20 @@ public class Usuario implements java.io.Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="Getters and Setters">
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public TipoUsuario getTipousuario() {
-        return tipousuario;
+        return tipoUsuario;
     }
 
-    public void setTipousuario(TipoUsuario tipousuario) {
-        this.tipousuario = tipousuario;
+    public void setTipousuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
     }
 
     public String getNombre() {

@@ -1,6 +1,7 @@
 package persistence.DAO;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import persistence.entities.OtrosGastos;
 import persistence.repository.OtrosGastosRepository;
 
@@ -15,7 +16,7 @@ public class OtrosGastosDAO {
     public List<OtrosGastos> getOtrosGastos(){
         List<OtrosGastos> otrosGastos = new ArrayList<>();
         repository.findAll().forEach(otroGasto -> {
-            montos.add(otroGasto);
+            otrosGastos.add(otroGasto);
         });
         return otrosGastos;
     }

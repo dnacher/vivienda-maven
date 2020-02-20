@@ -1,16 +1,9 @@
 package view.MB;
 
+import Utils.TecnicoImage;
 import UtilsGeneral.ConfiguracionControl;
 import control.ControlVentana;
 import ejb.services.TecnicoBean;
-import ejb.utils.TecnicoImage;
-import entities.constantes.Constantes;
-import entities.constantes.ConstantesErrores;
-import entities.constantes.ConstantesEtiquetas;
-import entities.constantes.ConstantesMensajes;
-import entities.enums.MenuMantenimiento;
-import entities.enums.errores;
-import entities.persistence.entities.Tecnico;
 import exceptions.ServiceException;
 import java.io.IOException;
 import java.net.URL;
@@ -47,6 +40,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import persistence.constantes.Constantes;
+import persistence.constantes.ConstantesEtiquetas;
+import persistence.constantes.ConstantesMensajes;
+import persistence.entities.Tecnico;
+import persistence.enums.MenuMantenimiento;
+import persistence.enums.errores;
 
 public class BajaLienciaMB implements Initializable {
 

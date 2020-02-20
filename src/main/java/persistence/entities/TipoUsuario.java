@@ -1,17 +1,16 @@
 package persistence.entities;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TipoUsuario implements java.io.Serializable {
+@Entity
+@Table(name = "tipo_usuario")
+public class TipoUsuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "nombre")
     private String nombre;
@@ -22,20 +21,56 @@ public class TipoUsuario implements java.io.Serializable {
     @Column(name = "activo")
     private boolean activo;
 
-    private List<PermisoUsuario> permisosusuarios = new ArrayList<>();
+    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinColumn(name = "permiso_usuario")
+    private PermisoUsuario permisosusuarios;
 
-
+    public TipoUsuario(){}
    
-	// <editor-fold defaultstate="collapsed" desc="Getters and Setters"> 
-	
+	// <editor-fold defaultstate="collapsed" desc="Getters and Setters">
 
-	
-	// </editor-fold>
+    public Integer getId() {
+        return id;
+    }
 
-    @Override
-    public String toString() {
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
         return nombre;
     }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public PermisoUsuario getPermisosusuarios() {
+        return permisosusuarios;
+    }
+
+    public void setPermisosusuarios(PermisoUsuario permisosusuarios) {
+        this.permisosusuarios = permisosusuarios;
+    }
+
+
+    // </editor-fold>
 
 }
 

@@ -1,6 +1,6 @@
 package persistence.DAO;
 
-import persistence.entities.CuotaConvenio;
+import org.springframework.beans.factory.annotation.Autowired;
 import persistence.entities.Estado;
 import persistence.repository.EstadoRepository;
 
@@ -20,7 +20,7 @@ public class EstadoDAO {
         return estados;
     }
 
-    public CuotaConvenio saveEstado(Estado estado){
+    public Estado saveEstado(Estado estado){
         return repository.save(estado);
     }
 
@@ -36,7 +36,7 @@ public class EstadoDAO {
         repository.deleteById(id);
     }
 
-    public CuotaConvenio getEstadoById(Integer id){
+    public Estado getEstadoById(Integer id){
         return repository.findById(id).get();
     }
 }

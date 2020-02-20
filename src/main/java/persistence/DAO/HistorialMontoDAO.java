@@ -1,5 +1,6 @@
 package persistence.DAO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import persistence.entities.CuotaConvenio;
 import persistence.entities.HistorialMonto;
 import persistence.repository.HistorialMontoRepository;

@@ -1,6 +1,6 @@
 package persistence.DAO;
 
-import persistence.entities.CuotaConvenio;
+import org.springframework.beans.factory.annotation.Autowired;
 import persistence.entities.Grupo;
 import persistence.repository.GrupoRepository;
 
@@ -36,7 +36,7 @@ public class GrupoDAO {
         repository.deleteById(id);
     }
 
-    public CuotaConvenio getGrupoById(Integer id){
+    public Grupo getGrupoById(Integer id){
         return repository.findById(id).get();
     }
 }

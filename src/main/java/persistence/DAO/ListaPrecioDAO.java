@@ -1,6 +1,8 @@
 package persistence.DAO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import persistence.entities.ListaPrecio;
+import persistence.repository.ListaPrecioRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ import java.util.List;
 public class ListaPrecioDAO {
 
     @Autowired
-    public ListaPrecio repository;
+    public ListaPrecioRepository repository;
 
     public List<ListaPrecio> getHistorialTrabajos(){
         List<ListaPrecio> listaPrecios = new ArrayList<>();

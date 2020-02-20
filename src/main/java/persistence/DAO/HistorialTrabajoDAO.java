@@ -1,5 +1,6 @@
 package persistence.DAO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import persistence.entities.CuotaConvenio;
 import persistence.entities.HistorialTrabajo;
 import persistence.repository.HistorialTrabajoRepository;
@@ -14,8 +15,8 @@ public class HistorialTrabajoDAO {
 
     public List<HistorialTrabajo> getHistorialTrabajos(){
         List<HistorialTrabajo> historialTrabajos = new ArrayList<>();
-        repository.findAll().forEach(ht -> {
-            historialTrabajos.add(ht);
+        repository.findAll().forEach(historialTrabajo -> {
+            historialTrabajos.add(historialTrabajo);
         });
         return historialTrabajos;
     }
