@@ -1,0 +1,300 @@
+package view.MB;
+
+import utils.TecnicoImage;
+import control.ControlVentana;
+import exceptions.ServiceException;
+
+import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javafx.animation.FadeTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
+import org.springframework.beans.factory.annotation.Autowired;
+import persistence.DAO.TecnicoDAO;
+import persistence.constantes.Constantes;
+import persistence.constantes.ConstantesErrores;
+import persistence.constantes.ConstantesEtiquetas;
+import persistence.entities.Tecnico;
+import persistence.enums.errores;
+
+public class BajaLienciaMB implements Initializable {
+
+    @FXML
+    private TableView<TecnicoImage> tableData;
+
+    @FXML
+    private ProgressBar bar;
+
+    @FXML
+    private Label lblApellido;
+
+    @FXML
+    private Label lblTelefono;
+
+    @FXML
+    private Label lblNombre;
+
+    @FXML
+    private ComboBox<String> cmbBajaLicencia;
+
+    @FXML
+    private DatePicker cmbFechaDesde;
+
+    @FXML
+    private DatePicker cmbFechaHasta;
+
+    @FXML
+    private Label lblHasta;
+
+    @FXML
+    private Label lblDesde;
+
+    @FXML
+    private Button btnAgregar;
+
+    private ObservableList<TecnicoImage> lista;
+
+    private Tecnico tecnico;
+
+    @Autowired
+    public TecnicoDAO tecnicoDAO;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        try {
+//            btnAgregar.setDisable(ConfiguracionControl.traePermisos(MenuMantenimiento.TecnicoModificacion.getPagina(), Constantes.PERMISO_OPERADOR));
+            task();
+        } catch (Exception ex) {
+            Logger.getLogger(BajaLienciaMB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void task() {
+        Task longTask = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                int max = 50;
+                for (int i = 1; i <= max; i++) {
+                    if (isCancelled()) {
+                        break;
+                    }
+                    updateProgress(i, max);
+                    Thread.sleep(20);
+                }
+                return null;
+            }
+        };
+
+        longTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent t) {
+                noVisible();
+                List<TecnicoImage> listImage = TecnicoImage.devuelveTecnicoConImagenEstado();
+                lista = FXCollections.observableArrayList(listImage);
+                cargaTabla();
+                cargaComboBajaLicencia();
+            }
+        });
+        bar.progressProperty().bind(longTask.progressProperty());
+        new Thread(longTask).start();
+    }
+
+    public void noVisible() {
+        lblDesde.setVisible(false);
+        lblHasta.setVisible(false);
+        cmbBajaLicencia.setVisible(false);
+        cmbFechaDesde.setVisible(false);
+        cmbFechaHasta.setVisible(false);
+    }
+
+    public void guardar() {
+        ControlVentana cv = new ControlVentana();
+        //Licencia
+        if (cmbBajaLicencia.getSelectionModel().getSelectedItem().equals(ConstantesEtiquetas.LICENCIA)) {
+            if (cmbFechaDesde.getValue().isAfter(cmbFechaHasta.getValue())) {
+                cv.creaVentanaNotificacion(errores.VERIFICAR.getError(), errores.FECHAFIN_MENOR_INICIO.getError(), 5, errores.ERROR.getError());
+            } else {
+                if (cmbFechaDesde.getValue().isBefore(LocalDate.now()) || cmbFechaHasta.getValue().isBefore(LocalDate.now())) {
+                    cv.creaVentanaNotificacion(errores.VERIFICAR.getError(), errores.FECHAFIN_MENOR_INICIO.getError(), 5, errores.WARNING.getError());
+                }
+//                Alert alert = new Alert(AlertType.CONFIRMATION);
+//                alert.setTitle(ConstantesMensajes.CONFIRMA_LICENCIA);
+//                alert.setHeaderText(ConstantesEtiquetas.LICENCIA);
+//                alert.setContentText(ConstantesMensajes.DESEA_CONFIRMAR_LICENCIA);
+//                DialogPane dialogPane = alert.getDialogPane();
+//                dialogPane.getStylesheets().add(getClass().getResource(Constantes.myDialogs).toExternalForm());
+//                dialogPane.getStyleClass().add(ConstantesEtiquetas.MY_DIALOG);
+//
+//                Optional<ButtonType> result = alert.showAndWait();
+//                if (result.get() == ButtonType.OK) {
+//                    try {
+//                        tecnico.setEstado(2);
+//                        tecnico.setFechaInicioEstado(ConfiguracionControl.TraeFecha(cmbFechaDesde.getValue()));
+//                        tecnico.setFechaFinEstado(ConfiguracionControl.TraeFecha(cmbFechaHasta.getValue()));
+//                        tecnicoDAO.updateTecnico(tecnico);
+//                        cv.creaVentanaNotificacionCorrecto();
+//                    } catch (ServiceException ex) {
+//                        cv.creaVentanaNotificacionError(ex.getMessage());
+//                        Logger.getLogger(BajaLienciaMB.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                }
+            }
+            //Baja
+        } else {
+//            Alert alert = new Alert(AlertType.CONFIRMATION);
+//            alert.setTitle(ConstantesEtiquetas.CONFIRMA_BAJA);
+//            alert.setHeaderText(ConstantesEtiquetas.BAJA);
+//            alert.setContentText(ConstantesEtiquetas.CONFIRMA_BAJA);
+//            DialogPane dialogPane = alert.getDialogPane();
+//            dialogPane.getStylesheets().add(getClass().getResource(Constantes.myDialogs).toExternalForm());
+//            dialogPane.getStyleClass().add(ConstantesEtiquetas.MY_DIALOG);
+//
+//            Optional<ButtonType> result = alert.showAndWait();
+//            if (result.get() == ButtonType.OK) {
+//                try {
+//                    tecnico.setEstado(3);
+//                    tecnico.setFechaFinEstado(ConfiguracionControl.TraeFecha(cmbFechaHasta.getValue()));
+//                    tecnico.setActivo(false);
+//					tecnicoDAO.updateTecnico(tecnico);
+//                    cv.creaVentanaNotificacion(ConstantesEtiquetas.BAJA, ConstantesMensajes.BAJA_CORRECTO + cmbFechaHasta.getValue(), 3, ConstantesEtiquetas.OK);
+//                } catch (ServiceException ex) {
+//                    cv.creaVentanaNotificacionError(ex.getMessage());
+//                    Logger.getLogger(BajaLienciaMB.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//			}
+        }
+        llenaTabla();
+    }
+
+    public void creaDialogoConfirmacion() throws IOException {
+        Stage stage = new Stage(StageStyle.UNDECORATED);
+        Parent root = FXMLLoader.load(getClass().getResource(Constantes.PAGINA_DIALOG));
+        Scene scene = new Scene(root);
+        FadeTransition ft = new FadeTransition(Duration.millis(1000), root);
+        ft.setFromValue(0.0);
+        ft.setToValue(1.0);
+        ft.play();
+        stage.setTitle(ConstantesEtiquetas.CONFIRMA);
+        stage.setScene(scene);
+        stage.showAndWait();
+    }
+
+    public void cargaTabla() {
+        TableColumn Nombre = new TableColumn(ConstantesEtiquetas.NOMBRE);
+        TableColumn Apellido = new TableColumn(ConstantesEtiquetas.APELLIDO);
+        TableColumn Telefono = new TableColumn(ConstantesEtiquetas.TELEFONO);
+        TableColumn Mail = new TableColumn(ConstantesEtiquetas.EMAIL);
+        TableColumn Calificacion = new TableColumn(ConstantesEtiquetas.CALIFICACION);
+        TableColumn Estado = new TableColumn(ConstantesEtiquetas.ESTADO);
+        TableColumn FechaInicio = new TableColumn(ConstantesEtiquetas.FECHA_INICIO);
+        TableColumn FechaFin = new TableColumn(ConstantesEtiquetas.FECHA_FIN);
+
+        Nombre.setMinWidth(150);
+        Nombre.setCellValueFactory(new PropertyValueFactory<>(ConstantesEtiquetas.NOMBRE));
+
+        Apellido.setMinWidth(150);
+        Apellido.setCellValueFactory(new PropertyValueFactory<>(ConstantesEtiquetas.APELLIDO));
+
+        Telefono.setMinWidth(100);
+        Telefono.setCellValueFactory(new PropertyValueFactory<>(ConstantesEtiquetas.TELEFONO));
+
+        Mail.setMinWidth(100);
+        Mail.setCellValueFactory(new PropertyValueFactory<>(ConstantesEtiquetas.MAIL));
+
+        Calificacion.setMinWidth(110);
+        Calificacion.setCellValueFactory(new PropertyValueFactory<>(ConstantesEtiquetas.CALIFICACION));
+
+        Estado.setMinWidth(100);
+        Estado.setCellValueFactory(new PropertyValueFactory<>(ConstantesEtiquetas.ESTADO));
+
+        FechaInicio.setMinWidth(100);
+        FechaInicio.setCellValueFactory(new PropertyValueFactory<>(ConstantesEtiquetas.FECHA_INICIO_ESTADO));
+
+        FechaFin.setMinWidth(100);
+        FechaFin.setCellValueFactory(new PropertyValueFactory<>(ConstantesEtiquetas.FECHA_FIN_ESTADO));
+
+        tableData.getColumns().addAll(Nombre, Apellido, Telefono, Mail, Calificacion, Estado, FechaInicio, FechaFin);
+        tableData.setItems(lista);
+    }
+
+    public void llenaTabla() {
+            lista = FXCollections.observableArrayList(TecnicoImage.devuelveTecnicoConImagenEstado());
+            tableData.setItems(lista);
+    }
+
+    public void cargaComboBajaLicencia() {
+        ObservableList<String> options = FXCollections.observableArrayList(Constantes.LISTA_LICENCIA_BAJA);
+        cmbBajaLicencia.setItems(options);
+        cmbBajaLicencia.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue ov, String t, String t1) {
+                managedCombos();
+            }
+        });
+    }
+
+    public void managedCombos() {
+        lblDesde.setVisible(false);
+        lblHasta.setVisible(false);
+        cmbFechaDesde.setVisible(false);
+        cmbFechaHasta.setVisible(false);
+        switch (cmbBajaLicencia.getSelectionModel().getSelectedItem()) {
+            case "Licencia":
+                cmbFechaDesde.setVisible(true);
+                cmbFechaHasta.setVisible(true);
+                lblDesde.setVisible(true);
+                lblHasta.setVisible(true);
+                break;
+            case "Baja":
+                cmbFechaDesde.setVisible(false);
+                cmbFechaHasta.setVisible(true);
+                lblDesde.setVisible(false);
+                lblHasta.setVisible(true);
+                break;
+        }
+    }
+
+    public void managedTabla() throws ServiceException {
+        try {
+            lblNombre.setText(ConstantesEtiquetas.VACIO);
+            lblApellido.setText(ConstantesEtiquetas.VACIO);
+            lblTelefono.setText(ConstantesEtiquetas.VACIO);
+            TecnicoImage ti = tableData.getSelectionModel().getSelectedItem();
+            tecnico = tecnicoDAO.getTecnicoById(ti.getIdTecnico());
+            lblNombre.setText(tecnico.getNombre());
+            lblApellido.setText(tecnico.getApellido());
+            lblTelefono.setText(tecnico.getTelefono());
+            cmbBajaLicencia.setVisible(true);
+        } catch (Exception ex) {
+            ControlVentana cv = new ControlVentana();
+            cv.creaVentanaNotificacionError(ConstantesErrores.DEBE_SELECCIONAR_TECNICO);
+        }
+    }
+}
