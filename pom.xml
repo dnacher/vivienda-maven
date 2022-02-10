@@ -26,7 +26,7 @@
         <health-check-timeout>120</health-check-timeout>
         <shutdown-timeout>50</shutdown-timeout>
 
-        <hibernate-core.version>5.4.2.Final</hibernate-core.version>
+        <hibernate-core.version>5.4.24.Final</hibernate-core.version>
         <hibernate-common.version>5.1.0.Final</hibernate-common.version>
         <hibernate-validations.version>6.1.5.Final</hibernate-validations.version>
         <hibernate-validations-uel.version>3.0.1-b09</hibernate-validations-uel.version>
