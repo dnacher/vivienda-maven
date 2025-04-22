@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cc76a031-cafd-4d3e-9de3-806f7cd0eece" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Vivienda-maven.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Vivienda-maven.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="cc76a031-cafd-4d3e-9de3-806f7cd0eece" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,6 +66,7 @@
       <workItem from="1582142747739" duration="43000" />
       <workItem from="1744153627708" duration="305000" />
       <workItem from="1744741812237" duration="144000" />
+      <workItem from="1745324917703" duration="159000" />
     </task>
     <servers />
   </component>
